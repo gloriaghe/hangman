@@ -13,6 +13,9 @@ import axios from "axios";
 
 export default {
     name: "PlayResetButton",
+    props: {
+        arrayPoint: Array,
+    },
     data() {
         return{
             transformArray: [],
@@ -20,12 +23,31 @@ export default {
             strike: 0,
             result: "", 
             errors: "",
-            loading: ""
+            loading: "",
         }
     },
+    computed: {
+          function2(){
+            this.function()
+            return console.log('cazzo')
+            //   this.strike = this.arrayPoint[0];
+            //   this.result = this.arrayPoint[1]; 
+            //   this.errors = this.arrayPoint[2];
+            //   this.score  = this.arrayPoint[3];
+          }
+            //  if(this.arrayPoint == []){
+            //     console.log('uguale'+ this.arrayPoint)
+                
+            // } else  {
+            //     console.log('diverso'+ this.arrayPoint)
+                // }
+         
+    },
     methods: {
+        function(){
+            console.log(this.arrayPoint+ 'hello')
+        },
         startButton(){
-            
             const randomNum = Math.floor(Math.random() * 83);
                 // TODO:api diverse? (MENù A TENDINA)
             axios.get('https://swapi.dev/api/people/'+ randomNum)
@@ -63,6 +85,7 @@ export default {
         noneButton(){
             const noneButton = document.getElementById('containerButton');
             noneButton.classList.remove('d-none');
+            noneButton.classList.add('d-flex');
             this.loading= "";
         },
         resetButton(){

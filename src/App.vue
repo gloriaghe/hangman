@@ -1,9 +1,8 @@
 <template>
-  <div id="app">
-    <h1 class="my-4 text-center" style="color:blue">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
-    <PlayResetButton @start="arrayName"/>
-    <ButtonComponent :prova2="transformArray"/>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <div id="app" class="d-flex justify-content-center flex-column">
+    <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
+    <PlayResetButton @start="arrayName" :arrayPoint="pointTotal"/>
+    <ButtonComponent :arrayModify="transformArray" @point="point"/>
   </div>
 </template>
 
@@ -19,25 +18,35 @@ export default {
   },
   data(){
     return{
-      transformArray: []
+      transformArray: [],
+      pointTotal: []
     }
   },
   methods: {
     arrayName(el){
       this.transformArray = el;
       console.log(this.transformArray)
+    },
+    point(el){
+      this.pointTotal= el;
+      console.log(el)
     }
   }
 }
 </script>
 
 <style lang="scss">
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #2c3e50;
+  color: white;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
