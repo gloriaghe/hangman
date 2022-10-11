@@ -1,17 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 class="my-4 text-center" style="color:blue">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
+    <PlayResetButton @start="arrayName"/>
+    <ButtonComponent :prova2="transformArray"/>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ButtonComponent from './components/ButtonComponent.vue'
+import PlayResetButton from './components/PlayResetButton.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ButtonComponent,
+    PlayResetButton
+  },
+  data(){
+    return{
+      transformArray: []
+    }
+  },
+  methods: {
+    arrayName(el){
+      this.transformArray = el;
+      console.log(this.transformArray)
+    }
   }
 }
 </script>
