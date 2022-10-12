@@ -22,6 +22,7 @@ data() {
         strike: 0,
         result: "", 
         errors: "",
+        scoreTotal: ""
     }
 },
 methods: {
@@ -31,6 +32,19 @@ methods: {
 
       },
       check (letter, arrayModify, correct) {
+        if(this.result != ""){
+          console.log('diverso')
+          this.score= 0;
+          this.strike= 0;
+          this.result= ""; 
+          this.errors= "";
+          this.scoreTotal= "";
+        }
+
+        document.querySelectorAll('.message').forEach(element => {
+                element.classList.remove('d-none')
+            });
+
           const totalLetter = arrayModify.length;
           document.getElementById(letter).disabled= true;
 
@@ -39,10 +53,11 @@ methods: {
               if(elemento == letter){
                   correct = true;
                   ++ this.score;
+                  this.scoreTotal= 'Hai indovinato ' + this.score + ' lettere';
                   console.log(this.score)
                   if(this.score == totalLetter){
-                      this.result= 'hai vinto';
-                      console.log("hai vinto")
+                      this.result= 'HAI VINTO!!!';
+                      console.log("HAI VINTO!!!")
                   }
               } 
 
@@ -50,15 +65,12 @@ methods: {
           if(correct == false) {
               this.strike += 1 ;
               this.errors= 'Hai fatto ' + this.strike + ' errori';
-              console.log("hai fatto " + this.strike +  "errori")
-
               if(this.strike == 5){
-                  this.result= 'hai perso';
-                  console.log("hai perso")
-
+                  this.result= 'HAI PERSO!!!';
+                  console.log("HAI PERSO!!!")
               }
           }
-          this.$emit('point', [this.strike, this.result, this.errors, this.score]);
+          this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal]);
 
       },
 }

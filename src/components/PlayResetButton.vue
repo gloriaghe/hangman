@@ -3,8 +3,9 @@
         <button id="btn-start" @click="startButton()" class="btn btn-outline-primary my-4 mx-3">START</button>
         <button id="reset" @click="resetButton" class="btn btn-outline-danger my-4">RESET</button>
         <h4>{{loading}}</h4>
-        <h2>{{result}}</h2>
-        <h2>{{errors}}</h2>
+        <h2 class="message">{{result}}</h2>
+        <h2 class="message">{{scoreTotal}}</h2>
+        <h2 class="message">{{errors}}</h2>
     </div>
 </template>
 
@@ -19,35 +20,31 @@ export default {
     data() {
         return{
             transformArray: [],
-            score: 0,
-            strike: 0,
-            result: "", 
-            errors: "",
             loading: "",
         }
     },
     computed: {
-          function2(){
-            this.function()
-            return console.log('cazzo')
-            //   this.strike = this.arrayPoint[0];
-            //   this.result = this.arrayPoint[1]; 
-            //   this.errors = this.arrayPoint[2];
-            //   this.score  = this.arrayPoint[3];
-          }
-            //  if(this.arrayPoint == []){
-            //     console.log('uguale'+ this.arrayPoint)
-                
-            // } else  {
-            //     console.log('diverso'+ this.arrayPoint)
-                // }
-         
+        strike: function(){
+            return this.arrayPoint[0]
+        },   
+        result: function(){
+            return this.arrayPoint[1] 
+        },
+        errors: function(){
+            return this.arrayPoint[2]
+        },
+        score: function(){
+            return this.arrayPoint[3]
+        },
+        scoreTotal: function(){
+            return this.arrayPoint[4]
+        },
+       
     },
     methods: {
-        function(){
-            console.log(this.arrayPoint+ 'hello')
-        },
         startButton(){
+            this.transformArray = [];
+
             const randomNum = Math.floor(Math.random() * 83);
                 // TODO:api diverse? (MENù A TENDINA)
             axios.get('https://swapi.dev/api/people/'+ randomNum)
@@ -92,15 +89,15 @@ export default {
             const start = document.getElementById('btn-start');
             const lettera = document.querySelectorAll('.letter');
             const noneButton = document.getElementById('containerButton');
+            document.querySelectorAll('.message').forEach(element => {
+                element.classList.add('d-none')
+            });
+     
 
             start.disabled= false;
             lettera.forEach((element) => {
             element.disabled = false
             });
-            this.result= '';
-            this.errors= '';
-            this.score = 0;
-            this.strike = 0;
             this.transformArray = [];
             noneButton.classList.add('d-none');
         }

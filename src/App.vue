@@ -28,9 +28,9 @@ export default {
       console.log(this.transformArray)
     },
     point(el){
-      this.pointTotal= el;
-      console.log(el)
-    }
+       this.pointTotal = el;
+       console.log(el)
+    },
   }
 }
 </script>
