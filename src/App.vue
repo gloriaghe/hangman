@@ -1,25 +1,34 @@
 <template>
-  <div id="app" class="d-flex justify-content-center flex-column">
-    <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
-    <PlayResetButton @start="arrayName" :arrayPoint="pointTotal"/>
-    <ButtonComponent :arrayModify="transformArray" @point="point"/>
+  <div id="app">
+    <NavBar @choice="api"/>
+    <div id="containerGame" class="d-flex justify-content-center flex-column">
+      <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
+      <PlayResetButton @start="arrayName" :arrayPoint="pointTotal" :api="apiChoice"/>
+      <ButtonComponent :arrayModify="transformArray" @point="point"/>
+    </div>
+    <FooterComponent/>
   </div>
 </template>
 
 <script>
-import ButtonComponent from './components/ButtonComponent.vue'
+import NavBar from './components/NavBar.vue';
+import FooterComponent from './components/FooterComponent.vue';
+import ButtonComponent from './components/ButtonComponent.vue';
 import PlayResetButton from './components/PlayResetButton.vue';
 
 export default {
   name: 'App',
   components: {
+    NavBar,
     ButtonComponent,
-    PlayResetButton
+    PlayResetButton,
+    FooterComponent
   },
   data(){
     return{
       transformArray: [],
-      pointTotal: []
+      pointTotal: [],
+      apiChoice: ''
     }
   },
   methods: {
@@ -31,6 +40,11 @@ export default {
        this.pointTotal = el;
        console.log(el)
     },
+    api(el){
+      this.apiChoice = el;
+      console.log(this.apiChoice)
+
+    }
   }
 }
 </script>
@@ -48,5 +62,10 @@ export default {
   color: white;
   width: 100vw;
   height: 100vh;
+
+  #containerGame{
+    height: calc(100vh - 120px);
+  }
+
 }
 </style>

@@ -27,9 +27,7 @@ data() {
 },
 methods: {
     letterChoice (element){
-          console.log(element);
           this.check(element, this.arrayModify, this.correct);
-
       },
       check (letter, arrayModify, correct) {
         if(this.result != ""){
@@ -54,10 +52,8 @@ methods: {
                   correct = true;
                   ++ this.score;
                   this.scoreTotal= 'Hai indovinato ' + this.score + ' lettere';
-                  console.log(this.score)
                   if(this.score == totalLetter){
                       this.result= 'HAI VINTO!!!';
-                      console.log("HAI VINTO!!!")
                   }
               } 
 
@@ -67,9 +63,10 @@ methods: {
               this.errors= 'Hai fatto ' + this.strike + ' errori';
               if(this.strike == 5){
                   this.result= 'HAI PERSO!!!';
-                  console.log("HAI PERSO!!!")
               }
           }
+          
+          //emit to App.vue
           this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal]);
 
       },

@@ -16,11 +16,14 @@ export default {
     name: "PlayResetButton",
     props: {
         arrayPoint: Array,
+        api: String
     },
     data() {
         return{
             transformArray: [],
             loading: "",
+            apiPokemon: 'https://pokeapi.co/api/v2/pokemon/',
+            apiStarWars: 'https://swapi.dev/api/people/'
         }
     },
     computed: {
@@ -42,18 +45,9 @@ export default {
        
     },
     methods: {
-        startButton(){
-            this.transformArray = [];
-
-            const randomNum = Math.floor(Math.random() * 83);
-                // TODO:api diverse? (MENù A TENDINA)
-            axios.get('https://swapi.dev/api/people/'+ randomNum)
-                .then((result) => {
-
-                // TODO:separare codice
-                const wordResult = result.data;
-                console.log(wordResult.name);
-                const name = wordResult.name.trim().toUpperCase();
+        //function string to name
+        arrToString(nome){
+            const name = nome.trim().toUpperCase();
                 this.transformArray = name.split("");
                 this.transformArray.forEach((element, i) => {
                     if(element == " "){
@@ -63,8 +57,31 @@ export default {
                         this.transformArray.splice(i, 1)                    
                     }
                 });
-                console.log(this.transformArray);
+                //emit to App.vue
                 this.$emit('start', this.transformArray);
+        },
+        startButton(){
+            this.transformArray = [];
+
+            const randomNum = Math.floor(Math.random() * 83);
+
+            let apiInput = '';
+
+            if(this.api == 'Pokemon'){
+                apiInput = this.apiPokemon
+            }else if(this.api == 'Star Wars'){
+                apiInput = this.apiStarWars
+            } else {
+                alert('seleziona Pokemon o Star Wars')
+                return console.log('errore')
+            }
+
+            axios.get(apiInput + randomNum)
+                .then((result) => {
+
+                const wordResult = result.data;
+                console.log(wordResult.name);
+                this.arrToString(wordResult.name);
 
                 })
                     //segnala errori api
@@ -105,6 +122,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 </style>
