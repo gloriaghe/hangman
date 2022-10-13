@@ -47,7 +47,7 @@ export default {
     },
     noneButton0o1(el){
       this.noneButton0o1App = el;
-      console.log(this.noneButton0o1App)
+      console.log(+this.noneButton0o1App)
     }
   }
 }

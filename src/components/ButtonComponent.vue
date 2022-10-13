@@ -2,7 +2,7 @@
   <section class="container">
     <div class="align-self-center container" id="containerButton" :class="noneButton == false? 'd-none': 'd-flex'">
       <div class="d-flex flex-wrap justify-content-center">
-          <button :disabled="noneButton0o1" @click="letterChoice(element)" v-for="(element, i) in letters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2" :value="element">{{element}}</button>
+          <button :disabled="!noneButton" @click="letterChoice(element)" v-for="(element, i) in letters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2" :value="element">{{element}}</button>
       </div>
     </div>
   </section>

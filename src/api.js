@@ -1,9 +1,6 @@
 import axios from "axios";
 
-let transformArray  = [];
-let apiChoice = ''
-let api = (apiChoice, transformArray) => {
-    console.log('qui'+apiChoice);
+export default function api (apiChoice) {
 
     let apiInput    = '';
     let apiPokemon  = 'https://pokeapi.co/api/v2/pokemon/';
@@ -19,34 +16,18 @@ let api = (apiChoice, transformArray) => {
                 return console.log('errore')
             }
 
-            axios.get(apiInput + randomNum)
-                .then((result) => {
-
-                const wordResult = result.data;
-                console.log(wordResult.name);
-                arrToString(wordResult.name, transformArray);
-
-                })
-                    //segnala errori api
-                .catch((error) => {
-                    console.log("Errore", error);
-                })
+            return axios.get(apiInput + randomNum)
+                .then((response) => {
+                    response.data.name
+                // nameForGame = result.data.name;
+                console.log(response.data.name)
+                // return result.data.name;
+                
+            })
+            //segnala errori api
+            .catch((error) => {
+                console.log("Errore", error);
+            })
             
-};
-
-const arrToString = (nome, transformArray) => {
-    const name = nome.trim().toUpperCase();
-        transformArray = name.split("");
-        transformArray.forEach((element, i) => {
-            if(element == " "){
-                transformArray.splice(i, 1)                    
-            }
-            if(element == "-"){
-                transformArray.splice(i, 1)                    
-            }
-        });
-        // //emit to App.vue
-        // this.$emit('start', this.transformArray);
 }
 
-export default api(apiChoice, transformArray);

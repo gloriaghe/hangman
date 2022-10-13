@@ -27,11 +27,10 @@ export default {
         return{
             transformArray: [],
             loading: "",
-            // apiPokemon: 'https://pokeapi.co/api/v2/pokemon/',
-            // apiStarWars: 'https://swapi.dev/api/people/',
             reset: false,
             btDisabled: false,
             noneButton0o1: false,
+            nameForGame: '',
         }
     },
     computed: {
@@ -56,63 +55,44 @@ export default {
 
     },
     methods: {
-        //function string to name
-        // arrToString(nome){
-        //     const name = nome.trim().toUpperCase();
-        //         this.transformArray = name.split("");
-        //         this.transformArray.forEach((element, i) => {
-        //             if(element == " "){
-        //                 this.transformArray.splice(i, 1)                    
-        //             }
-        //             if(element == "-"){
-        //                 this.transformArray.splice(i, 1)                    
-        //             }
-        //         });
-        //         //emit to App.vue
-        //         this.$emit('start', this.transformArray);
-        // },
+        // function string to name
+          arrToString(nameGame){
+              const name = nameGame.trim().toUpperCase();
+                  this.transformArray = name.split("");
+                  this.transformArray.forEach((element, i) => {
+                      if(element == " "){
+                          this.transformArray.splice(i, 1)                    
+                      }
+                      if(element == "-"){
+                          this.transformArray.splice(i, 1)                    
+                      }
+                  });
+                 // emit to App.vue
+                  this.$emit('start', this.transformArray);
+          },
         startButton(){
             
             // display none on message
             this.reset = false;
             this.transformArray = [];
 
-            api(this.api, this.transformArray)
-            // const randomNum = Math.floor(Math.random() * 83);
+            api(this.api, this.nameForGame).then(result => this.nameForGame = result);
+            console.log( api(this.api, this.nameForGame).then(result => this.nameForGame = result.data.name))
 
-            // let apiInput = '';
+            this.arrToString(this.nameForGame);
 
-            // if(this.api == 'Pokemon'){
-            //     apiInput = this.apiPokemon
-            // }else if(this.api == 'Star Wars'){
-            //     apiInput = this.apiStarWars
-            // } else {
-            //     alert('seleziona Pokemon o Star Wars')
-            //     return console.log('errore')
-            // }
-
-            // axios.get(apiInput + randomNum)
-            //     .then((result) => {
-
-            //     const wordResult = result.data;
-            //     console.log(wordResult.name);
-            //     this.arrToString(wordResult.name);
-
-            //     })
-            //         //segnala errori api
-            //     .catch((error) => {
-            //         console.log("Errore", error);
-            //     })
-            this.$emit('start', this.transformArray);
-            
             this.loading= "Loading...";
             setTimeout(this.noneButton, 4000)
             this.btDisabled = true;
+            
+            // //emit to App.vue
+            this.$emit('start', this.transformArray);
         },
         noneButton(){
             this.noneButton0o1 = true;
             this.loading= "";
             this.$emit('noneButton', this.noneButton0o1);
+            
         },
         resetButton(){
             this.noneButton0o1 = false;
