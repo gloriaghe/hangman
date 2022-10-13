@@ -75,9 +75,10 @@ export default {
             // display none on message
             this.reset = false;
             this.transformArray = [];
-
-            api(this.api, this.nameForGame).then(result => this.nameForGame = result);
-            console.log( api(this.api, this.nameForGame).then(result => this.nameForGame = result.data.name))
+            
+            const prova = ''
+            api(this.api, prova).then(result => this.nameForGame = result);
+            console.log( api(this.api, prova).then(result => this.nameForGame = result))
 
             this.arrToString(this.nameForGame);
 
