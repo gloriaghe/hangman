@@ -3,9 +3,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="#">HANGMAN</a>
             <div class="d-flex justify-content-between">
-                <li class="nav-item">
-                    <h6 class="nav-link" href="#">Seleziona Pokemon o Star Wars</h6>
-                    </li>
+                <h6 class="nav-link" href="#">Seleziona Pokemon o Star Wars</h6>
                 <select class="form-select" v-model="inputApi" @change="$emit('choice', inputApi)" aria-label="Default select example">
                     <option value="Pokemon">Pokemon</option>
                     <option value="Star Wars">Star Wars</option>

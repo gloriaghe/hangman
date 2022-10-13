@@ -1,8 +1,8 @@
 <template>
   <section class="container">
-    <div class="d-none align-self-center container" id="containerButton">
+    <div class="align-self-center container" id="containerButton" :class="noneButton == false? 'd-none': 'd-flex'">
       <div class="d-flex flex-wrap justify-content-center">
-          <button @click="letterChoice(element)" v-for="(element, i) in letters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2" :value="element">{{element}}</button>
+          <button :disabled="noneButton0o1" @click="letterChoice(element)" v-for="(element, i) in letters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2" :value="element">{{element}}</button>
       </div>
     </div>
   </section>
@@ -13,6 +13,7 @@ export default {
 name: 'ButtonComponent',
 props: {
   arrayModify: Array,
+  noneButton: Boolean,
 },
 data() {
     return {
@@ -22,9 +23,12 @@ data() {
         strike: 0,
         result: "", 
         errors: "",
-        scoreTotal: ""
+        scoreTotal: "",
+        resetButtonComponent: 1,
+
     }
 },
+
 methods: {
     letterChoice (element){
           this.check(element, this.arrayModify, this.correct);
@@ -39,12 +43,10 @@ methods: {
           this.scoreTotal= "";
         }
 
-        document.querySelectorAll('.message').forEach(element => {
-                element.classList.remove('d-none')
-            });
-
           const totalLetter = arrayModify.length;
-          document.getElementById(letter).disabled= true;
+          document.getElementById(letter).disabled = true;
+
+          this.resetButtonComponent = 1;
 
           arrayModify.forEach(elemento =>  {
 
@@ -54,6 +56,8 @@ methods: {
                   this.scoreTotal= 'Hai indovinato ' + this.score + ' lettere';
                   if(this.score == totalLetter){
                       this.result= 'HAI VINTO!!!';
+                      this.resetButtonComponent = 0;
+
                   }
               } 
 
@@ -63,11 +67,13 @@ methods: {
               this.errors= 'Hai fatto ' + this.strike + ' errori';
               if(this.strike == 5){
                   this.result= 'HAI PERSO!!!';
+                  this.resetButtonComponent = 0;
+
               }
           }
           
           //emit to App.vue
-          this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal]);
+          this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent]);
 
       },
 }

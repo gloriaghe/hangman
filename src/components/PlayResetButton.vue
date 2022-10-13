@@ -1,16 +1,21 @@
 <template>
     <div class="text-center">
-        <button id="btn-start" @click="startButton()" class="btn btn-outline-primary my-4 mx-3">START</button>
+        <button id="btn-start" :disabled="btDisabled" @click="startButton()" class="btn btn-outline-primary my-4 mx-3">START</button>
         <button id="reset" @click="resetButton" class="btn btn-outline-danger my-4">RESET</button>
         <h4>{{loading}}</h4>
-        <h2 class="message">{{result}}</h2>
-        <h2 class="message">{{scoreTotal}}</h2>
-        <h2 class="message">{{errors}}</h2>
+        <div :class="reset? 'd-none' : ''" v-if="resetButtonComponent? !reset: reset">
+            <h2>{{scoreTotal}}</h2>
+            <h2>{{errors}}</h2>
+        </div>
+        <div v-else>            
+            <h2>{{result}}</h2>
+        </div>
     </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import api from "../api.js";
 
 export default {
     name: "PlayResetButton",
@@ -22,8 +27,11 @@ export default {
         return{
             transformArray: [],
             loading: "",
-            apiPokemon: 'https://pokeapi.co/api/v2/pokemon/',
-            apiStarWars: 'https://swapi.dev/api/people/'
+            // apiPokemon: 'https://pokeapi.co/api/v2/pokemon/',
+            // apiStarWars: 'https://swapi.dev/api/people/',
+            reset: false,
+            btDisabled: false,
+            noneButton0o1: false,
         }
     },
     computed: {
@@ -42,82 +50,80 @@ export default {
         scoreTotal: function(){
             return this.arrayPoint[4]
         },
-       
+        resetButtonComponent: function(){
+            return this.arrayPoint[5]
+        },
+
     },
     methods: {
         //function string to name
-        arrToString(nome){
-            const name = nome.trim().toUpperCase();
-                this.transformArray = name.split("");
-                this.transformArray.forEach((element, i) => {
-                    if(element == " "){
-                        this.transformArray.splice(i, 1)                    
-                    }
-                    if(element == "-"){
-                        this.transformArray.splice(i, 1)                    
-                    }
-                });
-                //emit to App.vue
-                this.$emit('start', this.transformArray);
-        },
+        // arrToString(nome){
+        //     const name = nome.trim().toUpperCase();
+        //         this.transformArray = name.split("");
+        //         this.transformArray.forEach((element, i) => {
+        //             if(element == " "){
+        //                 this.transformArray.splice(i, 1)                    
+        //             }
+        //             if(element == "-"){
+        //                 this.transformArray.splice(i, 1)                    
+        //             }
+        //         });
+        //         //emit to App.vue
+        //         this.$emit('start', this.transformArray);
+        // },
         startButton(){
+            
+            // display none on message
+            this.reset = false;
             this.transformArray = [];
 
-            const randomNum = Math.floor(Math.random() * 83);
+            api(this.api, this.transformArray)
+            // const randomNum = Math.floor(Math.random() * 83);
 
-            let apiInput = '';
+            // let apiInput = '';
 
-            if(this.api == 'Pokemon'){
-                apiInput = this.apiPokemon
-            }else if(this.api == 'Star Wars'){
-                apiInput = this.apiStarWars
-            } else {
-                alert('seleziona Pokemon o Star Wars')
-                return console.log('errore')
-            }
+            // if(this.api == 'Pokemon'){
+            //     apiInput = this.apiPokemon
+            // }else if(this.api == 'Star Wars'){
+            //     apiInput = this.apiStarWars
+            // } else {
+            //     alert('seleziona Pokemon o Star Wars')
+            //     return console.log('errore')
+            // }
 
-            axios.get(apiInput + randomNum)
-                .then((result) => {
+            // axios.get(apiInput + randomNum)
+            //     .then((result) => {
 
-                const wordResult = result.data;
-                console.log(wordResult.name);
-                this.arrToString(wordResult.name);
+            //     const wordResult = result.data;
+            //     console.log(wordResult.name);
+            //     this.arrToString(wordResult.name);
 
-                })
-                    //segnala errori api
-                .catch((error) => {
-                    console.log("Errore", error);
-                })
+            //     })
+            //         //segnala errori api
+            //     .catch((error) => {
+            //         console.log("Errore", error);
+            //     })
+            this.$emit('start', this.transformArray);
             
             this.loading= "Loading...";
-
             setTimeout(this.noneButton, 4000)
-
-            const start = document.getElementById('btn-start');
-            start.disabled= true;
+            this.btDisabled = true;
         },
         noneButton(){
-            const noneButton = document.getElementById('containerButton');
-            noneButton.classList.remove('d-none');
-            noneButton.classList.add('d-flex');
+            this.noneButton0o1 = true;
             this.loading= "";
+            this.$emit('noneButton', this.noneButton0o1);
         },
         resetButton(){
-            const start = document.getElementById('btn-start');
-            const lettera = document.querySelectorAll('.letter');
-            const noneButton = document.getElementById('containerButton');
-            document.querySelectorAll('.message').forEach(element => {
-                element.classList.add('d-none')
-            });
-     
+            this.noneButton0o1 = false;
+            this.$emit('noneButton', this.noneButton0o1);
 
-            start.disabled= false;
-            lettera.forEach((element) => {
-            element.disabled = false
-            });
+           // display none on message
+            this.reset = true;
+            this.btDisabled = false;
             this.transformArray = [];
-            noneButton.classList.add('d-none');
-        }
+        },
+        
     }
 }
 </script>

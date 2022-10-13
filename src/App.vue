@@ -3,8 +3,8 @@
     <NavBar @choice="api"/>
     <div id="containerGame" class="d-flex justify-content-center flex-column">
       <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
-      <PlayResetButton @start="arrayName" :arrayPoint="pointTotal" :api="apiChoice"/>
-      <ButtonComponent :arrayModify="transformArray" @point="point"/>
+      <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :api="apiChoice"/>
+      <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App"/>
     </div>
     <FooterComponent/>
   </div>
@@ -28,7 +28,8 @@ export default {
     return{
       transformArray: [],
       pointTotal: [],
-      apiChoice: ''
+      apiChoice: '',
+      noneButton0o1App: false,
     }
   },
   methods: {
@@ -43,7 +44,10 @@ export default {
     api(el){
       this.apiChoice = el;
       console.log(this.apiChoice)
-
+    },
+    noneButton0o1(el){
+      this.noneButton0o1App = el;
+      console.log(this.noneButton0o1App)
     }
   }
 }
