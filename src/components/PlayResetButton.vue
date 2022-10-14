@@ -55,7 +55,6 @@ export default {
         resetButtonComponent: function(){
             return this.arrayPoint[5];
         },
-
     },
     methods: {
         // function string to name
@@ -74,14 +73,12 @@ export default {
                 this.$emit('start', this.transformArray);
         },
         startButton(){
-            console.log(this.result)
-            this.result = '';
-            console.log(this.result)
 
             // display none on message
             this.reset = false;
             this.transformArray = [];
             console.log(api(this.apiChose))
+
             // api(this.apiChose).then(response => {
             //     this.nameForGame = response;
             //     console.log(response)

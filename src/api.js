@@ -1,13 +1,13 @@
 import axios from "axios";
 
-export default function api (apiChoice) {
+const api = async (apiChoice) => {
 
     let apiInput    = '';
     let apiPokemon  = 'https://pokeapi.co/api/v2/pokemon/';
     let apiStarWars = 'https://swapi.dev/api/people/';
     const randomNum = Math.floor(Math.random() * 83);
 
-    var responses = '';
+    // var responses = '';
 
             if (apiChoice == 'Pokemon'){
                 apiInput = apiPokemon
@@ -20,16 +20,14 @@ export default function api (apiChoice) {
 
             axios.get(apiInput + randomNum)
             .then((response) => {
-                response.data.name;
                 console.log( 'name: ' + response.data.name);
-                responses = response.data.name;
+                return response.data.name;
             })
                 // segnala errori api
             .catch((error) => {
-                console.log("Errore", error);
+                return console.log("Errore", error);
             })
 
-            return responses;
 }
 
 export {
