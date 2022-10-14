@@ -15,13 +15,13 @@
 
 <script>
 // import axios from "axios";
-import api from "../api.js";
+import { api } from "../api.js";
 
 export default {
     name: "PlayResetButton",
     props: {
         arrayPoint: Array,
-        api: String
+        apiChose: String
     },
     data() {
         return{
@@ -31,6 +31,7 @@ export default {
             btDisabled: false,
             noneButton0o1: false,
             nameForGame: '',
+            prova: ''
         }
     },
     computed: {
@@ -75,13 +76,15 @@ export default {
             // display none on message
             this.reset = false;
             this.transformArray = [];
-            
-            const prova = ''
-            api(this.api, prova).then(result => this.nameForGame = result);
-            console.log( api(this.api, prova).then(result => this.nameForGame = result))
-
+            console.log(api(this.apiChose))
+            // api(this.apiChose).then(response => {
+            //     this.nameForGame = response;
+            //     console.log(response)
+                
+            // });
             this.arrToString(this.nameForGame);
-
+            // console.log( api(this.apiChose, prova).then(result => this.nameForGame = result))
+            
             this.loading= "Loading...";
             setTimeout(this.noneButton, 4000)
             this.btDisabled = true;

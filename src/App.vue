@@ -3,7 +3,7 @@
     <NavBar @choice="api"/>
     <div id="containerGame" class="d-flex justify-content-center flex-column">
       <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
-      <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :api="apiChoice"/>
+      <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :apiChose="apiChoice"/>
       <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App"/>
     </div>
     <FooterComponent/>

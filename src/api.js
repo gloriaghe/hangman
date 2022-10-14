@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default function api (apiChoice, responses) {
+const api  = async (apiChoice) => {
 
     let apiInput    = '';
     let apiPokemon  = 'https://pokeapi.co/api/v2/pokemon/';
@@ -16,18 +16,21 @@ export default function api (apiChoice, responses) {
                 return console.log('errore')
             }
 
-             axios.get(apiInput + randomNum)
+            axios.get(apiInput + randomNum)
                 .then((response) => {
-                    responses = response.data.name
-                  return responses
-                // nameForGame = result.data.name;
-                // return result.data.name;
-                
+                   response.data.name
+                    console.log( response.data.name)
+
+                    return response;
+              
             })
             //segnala errori api
             .catch((error) => {
                 console.log("Errore", error);
             })
+
             
 }
-
+export {
+    api
+}
