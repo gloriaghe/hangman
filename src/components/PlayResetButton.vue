@@ -4,6 +4,7 @@
         <button id="reset" @click="resetButton" class="btn btn-outline-danger my-4">RESET</button>
         <h4>{{loading}}</h4>
         <div :class="reset? 'd-none' : ''" v-if="resetButtonComponent? !reset: reset">
+            <h2>Il nome da indovinare è: <span class="text-uppercase">{{word}}</span></h2>
             <h2>{{scoreTotal}}</h2>
             <h2>{{errors}}</h2>
         </div>
@@ -54,6 +55,9 @@ export default {
         resetButtonComponent: function(){
             return this.arrayPoint[5];
         },
+        word: function(){
+            return this.arrayPoint[6];
+        },
     },
     methods: {
         // function string to name
@@ -69,7 +73,7 @@ export default {
                     }
                 });
                 // emit to App.vue
-                this.$emit('start', this.transformArray);
+                this.$emit('start', [nameGame, this.transformArray]);
         },
         startButton(){
 

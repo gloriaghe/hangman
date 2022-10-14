@@ -7,26 +7,19 @@ const api = async (apiChoice) => {
     let apiStarWars = 'https://swapi.dev/api/people/';
     const randomNum = Math.floor(Math.random() * 83);
 
-            if (apiChoice == 'Pokemon'){
-                apiInput = apiPokemon
-            } else if (apiChoice == 'Star Wars'){
-                apiInput = apiStarWars
-            } else {
-                alert('Seleziona Pokemon o Star Wars')
-            }
+    if (apiChoice == 'Pokemon'){
+        apiInput = apiPokemon
+    } else if (apiChoice == 'Star Wars'){
+        apiInput = apiStarWars
+    } else {
+        alert('Seleziona Pokemon o Star Wars')
+    }
 
-            let data = await axios.get(apiInput + randomNum);
-            console.log(data)
-            // .then((response) => {
-            //     console.log( 'name: ' + response.data.name);
-            //     return  response.data.name;
-            // })
-            //     // segnala errori api
-            // .catch((error) => {
-            //     console.log("Errore", error);
-            // })
-            return data;
-        };
+    let data = await axios.get(apiInput + randomNum);
+    console.log(data)
+    
+    return data;
+};
 
 export {
     api
