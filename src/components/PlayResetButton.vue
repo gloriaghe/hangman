@@ -30,7 +30,6 @@ export default {
             reset: false,
             btDisabled: false,
             noneButton0o1: false,
-            nameForGame: '',
         }
     },
     computed: {
@@ -77,15 +76,13 @@ export default {
             // display none on message
             this.reset = false;
             this.transformArray = [];
-            console.log(api(this.apiChose))
 
-            // api(this.apiChose).then(response => {
-            //     this.nameForGame = response;
-            //     console.log(response)
-                
-            // });
-            this.arrToString(this.nameForGame);
-            // console.log( api(this.apiChose, prova).then(result => this.nameForGame = result))
+            api(this.apiChose).then(resp => {
+
+                console.log(resp.data.name)                
+                this.arrToString(resp.data.name);
+            })
+        
             
             this.loading= "Loading...";
             setTimeout(this.noneButton, 4000)
