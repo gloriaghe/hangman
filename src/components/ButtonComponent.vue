@@ -32,50 +32,47 @@ data() {
 methods: {
     letterChoice (element){
           this.check(element, this.arrayModify, this.correct);
-      },
-      check (letter, arrayModify, correct) {
-        if(this.result != ""){
-          console.log('diverso')
-          this.score= 0;
-          this.strike= 0;
-          this.result= ""; 
-          this.errors= "";
-          this.scoreTotal= "";
-        }
+    },
+    check (letter, arrayModify, correct) {
+      if(this.result != ""){
+        console.log('diverso')
+        this.score= 0;
+        this.strike= 0;
+        this.result= ""; 
+        this.errors= "";
+        this.scoreTotal= "";
+      }
 
-          const totalLetter = arrayModify.length;
-          document.getElementById(letter).disabled = true;
+      const totalLetter = arrayModify.length;
+      document.getElementById(letter).disabled = true;
 
-          this.resetButtonComponent = 1;
+      this.resetButtonComponent = 1;
 
-          arrayModify.forEach(elemento =>  {
+      arrayModify.forEach(elemento =>  {
 
-              if(elemento == letter){
-                  correct = true;
-                  ++ this.score;
-                  this.scoreTotal= 'Hai indovinato ' + this.score + ' lettere';
-                  if(this.score == totalLetter){
-                      this.result= 'HAI VINTO!!!';
-                      this.resetButtonComponent = 0;
-
-                  }
-              } 
-
-          });
-          if(correct == false) {
-              this.strike += 1 ;
-              this.errors= 'Hai fatto ' + this.strike + ' errori';
-              if(this.strike == 5){
-                  this.result= 'HAI PERSO!!!';
+          if(elemento == letter){
+              correct = true;
+              ++ this.score;
+              this.scoreTotal= 'Hai indovinato ' + this.score + ' lettere';
+              if(this.score == totalLetter){
+                  this.result= 'HAI VINTO!!!';
                   this.resetButtonComponent = 0;
-
               }
-          }
-          
-          //emit to App.vue
-          this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent]);
+          } 
+      });
+      if(correct == false) {
+          this.strike += 1 ;
+          this.errors= 'Hai fatto ' + this.strike + ' errori';
+          if(this.strike == 5){
+              this.result= 'HAI PERSO!!!';
+              this.resetButtonComponent = 0;
 
-      },
+          }
+      }
+      
+      //emit to App.vue
+      this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent]);
+    },
 }
 }
 </script>

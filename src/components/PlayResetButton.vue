@@ -31,48 +31,53 @@ export default {
             btDisabled: false,
             noneButton0o1: false,
             nameForGame: '',
-            prova: ''
         }
     },
     computed: {
         strike: function(){
-            return this.arrayPoint[0]
+            return this.arrayPoint[0];
         },   
         result: function(){
-            return this.arrayPoint[1] 
+            if(this.arrayPoint[1] != '' && this.arrayPoint[5] != 1 && this.arrayPoint[5] != undefined){
+                alert(this.arrayPoint[1])
+            } 
+            return '';
         },
         errors: function(){
-            return this.arrayPoint[2]
+            return this.arrayPoint[2];
         },
         score: function(){
-            return this.arrayPoint[3]
+            return this.arrayPoint[3];
         },
         scoreTotal: function(){
-            return this.arrayPoint[4]
+            return this.arrayPoint[4];
         },
         resetButtonComponent: function(){
-            return this.arrayPoint[5]
+            return this.arrayPoint[5];
         },
 
     },
     methods: {
         // function string to name
-          arrToString(nameGame){
-              const name = nameGame.trim().toUpperCase();
-                  this.transformArray = name.split("");
-                  this.transformArray.forEach((element, i) => {
-                      if(element == " "){
-                          this.transformArray.splice(i, 1)                    
-                      }
-                      if(element == "-"){
-                          this.transformArray.splice(i, 1)                    
-                      }
-                  });
-                 // emit to App.vue
-                  this.$emit('start', this.transformArray);
-          },
+        arrToString(nameGame){
+            const name = nameGame.trim().toUpperCase();
+                this.transformArray = name.split("");
+                this.transformArray.forEach((element, i) => {
+                    if(element == " "){
+                        this.transformArray.splice(i, 1)                    
+                    }
+                    if(element == "-"){
+                        this.transformArray.splice(i, 1)                    
+                    }
+                });
+                // emit to App.vue
+                this.$emit('start', this.transformArray);
+        },
         startButton(){
-            
+            console.log(this.result)
+            this.result = '';
+            console.log(this.result)
+
             // display none on message
             this.reset = false;
             this.transformArray = [];
@@ -91,6 +96,7 @@ export default {
             
             // //emit to App.vue
             this.$emit('start', this.transformArray);
+
         },
         noneButton(){
             this.noneButton0o1 = true;
