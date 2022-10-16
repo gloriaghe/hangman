@@ -29,10 +29,15 @@ export default {
       arrLetter: [],
     }
   },
-
+  computed: {
+    buttonNone: function(){
+     
+      console.log('qui' + this.noneButton)
+      return this.noneButton;
+    },  
+  }, 
   methods: {
     letterChoice(element) {
-
       this.check(element, this.arrayModify[0], this.arrayModify[1], this.correct);
     },
     toStart(){
@@ -42,7 +47,6 @@ export default {
       this.result = "";
       this.errors = "";
       this.scoreTotal = "";
-      // this.name = '';
     },
     lettercomparison(arrayToModify, arrLetter){
       //letter comparison 
@@ -50,7 +54,6 @@ export default {
         if (arrLetter.includes(element)) {
           let index = arrayToModify.indexOf(element);
           arrayToModify.splice(index, 1)
-          console.log(arrayToModify)
         }
       });
     },
@@ -68,7 +71,6 @@ export default {
         if (elemento == letter) {
           //compose name
           this.arrLetter.push(letter);
-          console.log(this.arrLetter);
 
           if (this.arrLetter != []) {
             this.lettercomparison(arrayToModify, this.arrLetter);
@@ -95,7 +97,7 @@ export default {
         this.strike += 1;
         this.errors = 'Hai fatto ' + this.strike + ' errori';
         let arrayName
-        if (this.strike >= 5) {
+        if (this.strike >= 10) {
           arrayName = name.split("")
           let counter = -1;
         
@@ -113,7 +115,6 @@ export default {
         }
       }
 
-
       //emit to App.vue
       this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name]);
     },
@@ -122,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss">
-#containerButton {
-  width: 60%;
-}
+  #containerButton {
+    width: 60%;
+  }
 </style>

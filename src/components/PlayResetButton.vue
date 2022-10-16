@@ -5,12 +5,10 @@
         <h4>{{loading}}</h4>
         <div :class="reset? 'd-none' : ''" v-if="resetButtonComponent? !reset: reset">
             <h2>Il nome da indovinare è: <span class="text-uppercase">{{word}}</span></h2>
-            <h2>{{scoreTotal}}</h2>
-            <h2>{{errors}}</h2>
         </div>
-        <div v-else>            
-            <h2>{{result}}</h2>
-        </div>
+        <h2>{{scoreTotal}}</h2>
+        <h2>{{errors}}</h2>
+        <h2>{{result}}</h2>
     </div>
 </template>
 
@@ -44,13 +42,25 @@ export default {
             return '';
         },
         errors: function(){
-            return this.arrayPoint[2];
+            if(this.reset === false){
+                return ''
+            } else if (this.reset === true) {
+                return this.arrayPoint[2];
+            } else {
+                return ''
+            }
         },
         score: function(){
             return this.arrayPoint[3];
         },
         scoreTotal: function(){
-            return this.arrayPoint[4];
+            if(this.reset === false){
+                return ''
+            } else if (this.reset === true) {
+                return this.arrayPoint[4];
+            } else {
+                return ''
+            }
         },
         resetButtonComponent: function(){
             return this.arrayPoint[5];
@@ -76,9 +86,9 @@ export default {
                 this.$emit('start', [nameGame, this.transformArray]);
         },
         startButton(){
-
             // display none on message
             this.reset = false;
+
             this.transformArray = [];
 
         if(this.apiChose != ''){
@@ -110,8 +120,8 @@ export default {
         resetButton(){
             this.noneButton0o1 = false;
             this.$emit('noneButton', this.noneButton0o1);
-
-           // display none on message
+            
+            // display none on message
             this.reset = true;
             this.btDisabled = false;
             this.transformArray = [];

@@ -3,8 +3,13 @@
     <NavBar @choice="api"/>
     <div id="containerGame" class="d-flex justify-content-center flex-column">
       <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
-      <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :apiChose="apiChoice"/>
-      <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App"/>
+      <div class="d-flex justify-content-around">
+        <HangMan :strike="strikeForImage"/>
+        <div>
+          <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :apiChose="apiChoice"/>
+          <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App"/>
+        </div>
+      </div>
     </div>
     <FooterComponent/>
   </div>
@@ -12,6 +17,7 @@
 
 <script>
 import NavBar from './components/NavBar.vue';
+import HangMan from './components/HangMan.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import ButtonComponent from './components/ButtonComponent.vue';
 import PlayResetButton from './components/PlayResetButton.vue';
@@ -20,6 +26,7 @@ export default {
   name: 'App',
   components: {
     NavBar,
+    HangMan,
     ButtonComponent,
     PlayResetButton,
     FooterComponent
@@ -30,20 +37,22 @@ export default {
       pointTotal: [],
       apiChoice: '',
       noneButton0o1App: false,
+      strikeForImage: 0,
     }
   },
   methods: {
     arrayName(el){
       this.transformArray = el;
-      console.log(this.transformArray)
+      // console.log(this.transformArray)
     },
     point(el){
        this.pointTotal = el;
-       console.log(el)
+       this.strikeForImage = this.pointTotal[0];
+      //  console.log(el)
     },
     api(el){
       this.apiChoice = el;
-      console.log(this.apiChoice)
+      // console.log(this.apiChoice);
     },
     noneButton0o1(el){
       this.noneButton0o1App = el;
@@ -68,6 +77,8 @@ export default {
 
   #containerGame{
     height: calc(100vh - 120px);
+    width: 70%;
+    margin: 0 auto;
   }
 
 }
