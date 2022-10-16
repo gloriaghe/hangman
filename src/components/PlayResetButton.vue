@@ -16,7 +16,7 @@
 
 <script>
 // import axios from "axios";
-import { api } from "../api.js";
+import { getWord } from "../api.js";
 
 export default {
     name: "PlayResetButton",
@@ -81,12 +81,14 @@ export default {
             this.reset = false;
             this.transformArray = [];
 
-            api(this.apiChose).then(resp => {
+        if(this.apiChose != ''){
 
+            getWord(this.apiChose).then(resp => {
+            
                 console.log(resp.data.name)                
                 this.arrToString(resp.data.name);
             })
-        
+
             
             this.loading= "Loading...";
             setTimeout(this.noneButton, 4000)
@@ -94,6 +96,9 @@ export default {
             
             // //emit to App.vue
             this.$emit('start', this.transformArray);
+        } else {
+            alert('Seleziona Pokemon o Star Wars');
+        }
 
         },
         noneButton(){

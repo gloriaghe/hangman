@@ -35,58 +35,79 @@ export default {
 
       this.check(element, this.arrayModify[0], this.arrayModify[1], this.correct);
     },
+    toStart(){
+      console.log('diverso')
+      this.score = 0;
+      this.strike = 0;
+      this.result = "";
+      this.errors = "";
+      this.scoreTotal = "";
+      // this.name = '';
+    },
+    lettercomparison(arrayToModify, arrLetter){
+      //letter comparison 
+      arrayToModify.forEach(element => {
+        if (arrLetter.includes(element)) {
+          let index = arrayToModify.indexOf(element);
+          arrayToModify.splice(index, 1)
+          console.log(arrayToModify)
+        }
+      });
+    },
     check(letter, name, arrayToModify, correct) {
-
-
       if (this.result != "") {
-        console.log('diverso')
-        this.score = 0;
-        this.strike = 0;
-        this.result = "";
-        this.errors = "";
-        this.scoreTotal = "";
-        this.name = '';
+        this.toStart();
       }
-      console.log(name.lenght+'lunghezza')
+      
       document.getElementById(letter).disabled = true;
 
       this.resetButtonComponent = 1;
 
       arrayToModify.forEach(elemento => {
-
+        //correct
         if (elemento == letter) {
           //compose name
           this.arrLetter.push(letter);
           console.log(this.arrLetter);
 
           if (this.arrLetter != []) {
-            //letter comparison 
-            arrayToModify.forEach(element => {
-              if (this.arrLetter.includes(element)) {
-                let index = arrayToModify.indexOf(element);
-                arrayToModify.splice(index, 1)
-                console.log(arrayToModify)
-              }
-            });
-            //replace letter
-            arrayToModify.forEach(element => {
-              name = name.toUpperCase().replace(element, "_")
-            });
+            this.lettercomparison(arrayToModify, this.arrLetter);
           }
+
           correct = true;
           ++this.score;
           this.scoreTotal = 'Hai indovinato ' + this.score + ' lettere';
         }
       });
-      if (name.lenght == this.score) {
+
+      //replace letter
+      arrayToModify.forEach(element => {
+        name = name.toUpperCase().replace(element, "_")
+      });
+      
+      if (!name.includes('_')) {
         this.result = 'HAI VINTO!!! Il nome era ' + name.toUpperCase();
         this.resetButtonComponent = 0;
       }
+
+      //error
       if (correct == false) {
         this.strike += 1;
         this.errors = 'Hai fatto ' + this.strike + ' errori';
-        if (this.strike == 5) {
-          this.result = 'HAI PERSO!!! Il nome era ' + name.toUpperCase();
+        let arrayName
+        if (this.strike >= 5) {
+          arrayName = name.split("")
+          let counter = -1;
+        
+          //full name without "_"
+          arrayName.forEach((element, index)=> {
+            if(element == '_'){
+             ++counter
+             arrayName.splice(index, 1, arrayToModify[counter])
+           }
+            });
+            
+          this.result = 'HAI PERSO!!! Il nome era ' + arrayName.join("").toUpperCase();
           this.resetButtonComponent = 0;
 
         }
