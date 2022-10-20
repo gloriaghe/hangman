@@ -6,7 +6,6 @@
           v-for="(element, i) in arrletters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2"
           :value="element.nameLetter">{{element.nameLetter}}</button>
       </div>
-      <!-- <div>{{array}}</div> -->
       <!-- check for function tostart() -->
       <div>{{buttonNone}}</div>
     </div>
@@ -138,13 +137,6 @@ export default {
     }
   },
   computed: {
-    // array: function () {
-    //   if (this.arrayModify === []) {
-
-    //     return '';
-    //   }
-    //   return '';
-    // },
     buttonNone: function () {
       if (this.noneButton == false) {
         this.toStart();
@@ -164,11 +156,10 @@ export default {
       this.errors = "";
       this.scoreTotal = "";
       this.arrLetter = [];
-      this.arrClick= [];
+      // for button disabled
+      this.arrClick = [];
       this.arrletters.forEach(element => {
-
         element.active = false;
-
       });
     },
     lettercomparison(arrayToModify, arrLetter) {
@@ -177,6 +168,13 @@ export default {
         if (arrLetter.includes(element)) {
           let index = arrayToModify.indexOf(element);
           arrayToModify.splice(index, 1)
+        }
+      });
+    },
+    buttonDisabled(arrletters, arrClick) {
+      arrletters.forEach(element => {
+        if (arrClick.includes(element.nameLetter)) {
+          element.active = true;
         }
       });
     },
@@ -190,7 +188,6 @@ export default {
 
       if (this.result != "") {
         this.toStart();
-
       }
 
       this.resetButtonComponent = 1;
@@ -243,11 +240,8 @@ export default {
 
         }
       }
-      this.arrletters.forEach(element => {
-        if (this.arrClick.includes(element.nameLetter)) {
-          element.active = true;
-        }
-      });
+
+      this.buttonDisabled(this.arrletters, this.arrClick);
 
       //emit to App.vue
       this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name, nameCorrect]);
