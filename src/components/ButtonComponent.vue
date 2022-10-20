@@ -2,8 +2,9 @@
   <section class="container">
     <div class="align-self-center container" id="containerButton" :class="noneButton == false? 'd-none': 'd-flex'">
       <div class="d-flex flex-wrap justify-content-center">
-        <button :disabled="!noneButton" @click="letterChoice(element)" v-for="(element, i) in letters" :key="i"
-          :id="element" class="letter btn btn-primary mx-2 my-2" :value="element">{{element}}</button>
+        <button :disabled="!noneButton || element.active" @click="letterChoice(element.nameLetter)"
+          v-for="(element, i) in arrletters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2"
+          :value="element.nameLetter">{{element.nameLetter}}</button>
       </div>
       <!-- <div>{{array}}</div> -->
       <!-- check for function tostart() -->
@@ -21,7 +22,109 @@ export default {
   },
   data() {
     return {
-      letters: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+      arrletters: [
+        {
+          'nameLetter': "A",
+          'active': false
+        },
+        {
+          'nameLetter': "B",
+          'active': false
+        },
+        {
+          'nameLetter': "C",
+          'active': false
+        },
+        {
+          'nameLetter': "D",
+          'active': false
+        },
+        {
+          'nameLetter': "E",
+          'active': false
+        },
+        {
+          'nameLetter': "F",
+          'active': false
+        },
+        {
+          'nameLetter': "G",
+          'active': false
+        },
+        {
+          'nameLetter': "H",
+          'active': false
+        }, {
+          'nameLetter': "I",
+          'active': false
+        },
+        {
+          'nameLetter': "J",
+          'active': false
+        },
+        {
+          'nameLetter': "K",
+          'active': false
+        },
+        {
+          'nameLetter': "L",
+          'active': false
+        }, {
+          'nameLetter': "M",
+          'active': false
+        },
+        {
+          'nameLetter': "N",
+          'active': false
+        },
+        {
+          'nameLetter': "O",
+          'active': false
+        },
+        {
+          'nameLetter': "P",
+          'active': false
+        }, {
+          'nameLetter': "Q",
+          'active': false
+        },
+        {
+          'nameLetter': "R",
+          'active': false
+        },
+        {
+          'nameLetter': "S",
+          'active': false
+        },
+        {
+          'nameLetter': "T",
+          'active': false
+        },
+        {
+          'nameLetter': "U",
+          'active': false
+        },
+        {
+          'nameLetter': "V",
+          'active': false
+        },
+        {
+          'nameLetter': "W",
+          'active': false
+        },
+        {
+          'nameLetter': "X",
+          'active': false
+        },
+        {
+          'nameLetter': "Y",
+          'active': false
+        },
+        {
+          'nameLetter': "Z",
+          'active': false
+        },
+      ],
       correct: false,
       score: 0,
       strike: 0,
@@ -30,6 +133,8 @@ export default {
       scoreTotal: "",
       resetButtonComponent: 1,
       arrLetter: [],
+      buttonDiasabled: false,
+      arrClick: []
     }
   },
   computed: {
@@ -59,6 +164,12 @@ export default {
       this.errors = "";
       this.scoreTotal = "";
       this.arrLetter = [];
+      this.arrClick= [];
+      this.arrletters.forEach(element => {
+
+        element.active = false;
+
+      });
     },
     lettercomparison(arrayToModify, arrLetter) {
       //letter comparison 
@@ -71,15 +182,16 @@ export default {
     },
     check(letter, name, arrayToModify, correct, nameCorrect) {
 
+      this.arrClick.push(letter);
+
       if (this.arrayModify === []) {
         this.arrLetter = [];
       }
 
       if (this.result != "") {
         this.toStart();
-      }
 
-      document.getElementById(letter).disabled = true;
+      }
 
       this.resetButtonComponent = 1;
 
@@ -131,6 +243,11 @@ export default {
 
         }
       }
+      this.arrletters.forEach(element => {
+        if (this.arrClick.includes(element.nameLetter)) {
+          element.active = true;
+        }
+      });
 
       //emit to App.vue
       this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name, nameCorrect]);
