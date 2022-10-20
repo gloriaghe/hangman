@@ -4,7 +4,7 @@
     <div id="containerGame" class="d-flex justify-content-center flex-column">
       <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
       <div class="d-flex justify-content-around">
-        <HangMan :strike="strikeForImage"/>
+        <HangMan v-if="this.noneButton0o1App" :strike="strikeForImage"/>
         <div>
           <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :apiChose="apiChoice"/>
           <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App"/>
@@ -43,21 +43,18 @@ export default {
   methods: {
     arrayName(el){
       this.transformArray = el;
-      // console.log(this.transformArray)
     },
     point(el){
        this.pointTotal = el;
-       console.log(this.pointTotal[0])
 
        this.strikeForImage = this.pointTotal[0];
-      //  console.log(el)
     },
     api(el){
       this.apiChoice = el;
-      // console.log(this.apiChoice);
     },
     noneButton0o1(el){
       this.noneButton0o1App = el;
+      console.log(this.noneButton0o1App)
     }
   }
 }
