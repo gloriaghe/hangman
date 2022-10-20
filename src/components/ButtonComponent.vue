@@ -5,6 +5,9 @@
         <button :disabled="!noneButton" @click="letterChoice(element)" v-for="(element, i) in letters" :key="i"
           :id="element" class="letter btn btn-primary mx-2 my-2" :value="element">{{element}}</button>
       </div>
+      <!-- <div>{{array}}</div> -->
+      <!-- check for function tostart() -->
+      <div>{{buttonNone}}</div>
     </div>
   </section>
 </template>
@@ -30,25 +33,34 @@ export default {
     }
   },
   computed: {
-    buttonNone: function(){
-     
-      console.log('qui' + this.noneButton)
-      return this.noneButton;
-    },  
-  }, 
+    // array: function () {
+    //   if (this.arrayModify === []) {
+
+    //     return '';
+    //   }
+    //   return '';
+    // },
+    buttonNone: function () {
+      if (this.noneButton == false) {
+        this.toStart();
+      }
+      return '';
+    },
+  },
   methods: {
     letterChoice(element) {
-      this.check(element, this.arrayModify[0], this.arrayModify[1], this.correct);
+      this.check(element, this.arrayModify[0], this.arrayModify[1], this.correct, this.arrayModify[0]);
     },
-    toStart(){
+    toStart() {
       console.log('diverso')
       this.score = 0;
       this.strike = 0;
       this.result = "";
       this.errors = "";
       this.scoreTotal = "";
+      this.arrLetter = [];
     },
-    lettercomparison(arrayToModify, arrLetter){
+    lettercomparison(arrayToModify, arrLetter) {
       //letter comparison 
       arrayToModify.forEach(element => {
         if (arrLetter.includes(element)) {
@@ -57,11 +69,16 @@ export default {
         }
       });
     },
-    check(letter, name, arrayToModify, correct) {
+    check(letter, name, arrayToModify, correct, nameCorrect) {
+
+      if (this.arrayModify === []) {
+        this.arrLetter = [];
+      }
+
       if (this.result != "") {
         this.toStart();
       }
-      
+
       document.getElementById(letter).disabled = true;
 
       this.resetButtonComponent = 1;
@@ -86,7 +103,7 @@ export default {
       arrayToModify.forEach(element => {
         name = name.toUpperCase().replace(element, "_")
       });
-      
+
       if (!name.includes('_')) {
         this.result = 'HAI VINTO!!! Il nome era ' + name.toUpperCase();
         this.resetButtonComponent = 0;
@@ -100,15 +117,15 @@ export default {
         if (this.strike >= 10) {
           arrayName = name.split("")
           let counter = -1;
-        
+
           //full name without "_"
-          arrayName.forEach((element, index)=> {
-            if(element == '_'){
-             ++counter
-             arrayName.splice(index, 1, arrayToModify[counter])
-           }
-            });
-            
+          arrayName.forEach((element, index) => {
+            if (element == '_') {
+              ++counter
+              arrayName.splice(index, 1, arrayToModify[counter])
+            }
+          });
+
           this.result = 'HAI PERSO!!! Il nome era ' + arrayName.join("").toUpperCase();
           this.resetButtonComponent = 0;
 
@@ -116,14 +133,14 @@ export default {
       }
 
       //emit to App.vue
-      this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name]);
+      this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name, nameCorrect]);
     },
   }
 }
 </script>
 
 <style lang="scss">
-  #containerButton {
-    width: 60%;
-  }
+#containerButton {
+  width: 60%;
+}
 </style>

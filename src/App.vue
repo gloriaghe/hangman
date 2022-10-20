@@ -47,6 +47,8 @@ export default {
     },
     point(el){
        this.pointTotal = el;
+       console.log(this.pointTotal[0])
+
        this.strikeForImage = this.pointTotal[0];
       //  console.log(el)
     },

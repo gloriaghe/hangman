@@ -29,6 +29,7 @@ export default {
             reset: false,
             btDisabled: false,
             noneButton0o1: false,
+            saveName: ''
         }
     },
     computed: {
@@ -66,7 +67,12 @@ export default {
             return this.arrayPoint[5];
         },
         word: function(){
-            return this.arrayPoint[6];
+            if(this.arrayPoint[7] === this.saveName){
+
+                return this.arrayPoint[6];
+            } else  {
+                return '_____'
+                        }
         },
     },
     methods: {
@@ -88,14 +94,14 @@ export default {
         startButton(){
             // display none on message
             this.reset = false;
-
             this.transformArray = [];
 
         if(this.apiChose != ''){
 
             getWord(this.apiChose).then(resp => {
             
-                console.log(resp.data.name)                
+                console.log(resp.data.name)   
+                this.saveName =  resp.data.name;            
                 this.arrToString(resp.data.name);
             })
 
@@ -120,7 +126,7 @@ export default {
         resetButton(){
             this.noneButton0o1 = false;
             this.$emit('noneButton', this.noneButton0o1);
-            
+
             // display none on message
             this.reset = true;
             this.btDisabled = false;
