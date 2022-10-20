@@ -3,7 +3,7 @@
     <div class="align-self-center container" id="containerButton" :class="noneButton == false? 'd-none': 'd-flex'">
       <div class="d-flex flex-wrap justify-content-center">
         <button :disabled="!noneButton || element.active" @click="letterChoice(element.nameLetter)"
-          v-for="(element, i) in arrletters" :key="i" :id="element" class="letter btn btn-primary mx-2 my-2"
+          v-for="(element, i) in arrletters" :key="i" :id="element" class="letter btn btn-info mx-2 my-2"
           :value="element.nameLetter">{{element.nameLetter}}</button>
       </div>
       <!-- check for function tostart() -->
@@ -257,5 +257,16 @@ export default {
 <style lang="scss">
 #containerButton {
   width: 60%;
+  .letter{
+    color:  white;
+    background-color: rgb(0, 121, 121);
+    border: none;
+    border-radius: 10px;
+
+    &:hover{
+      background-color: rgb(5, 173, 173);
+
+    }
+  }
 }
 </style>

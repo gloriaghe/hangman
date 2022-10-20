@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <NavBar @choice="api"/>
+    <NavBar @choice="api" />
     <div id="containerGame" class="d-flex justify-content-center flex-column">
       <h1 class="text-center">INDOVINA IL NOME DEL PERSONAGGIO:</h1>
       <div class="d-flex justify-content-around">
-        <HangMan v-if="this.noneButton0o1App" :strike="strikeForImage"/>
+        <HangMan v-if="this.noneButton0o1App" :strike="strikeForImage" />
         <div>
-          <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal" :apiChose="apiChoice"/>
-          <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App"/>
+          <PlayResetButton @start="arrayName" @noneButton="noneButton0o1" :arrayPoint="pointTotal"
+            :apiChose="apiChoice" />
+          <ButtonComponent :arrayModify="transformArray" @point="point" :noneButton="noneButton0o1App" />
         </div>
       </div>
     </div>
-    <FooterComponent/>
+    <FooterComponent />
   </div>
 </template>
 
@@ -31,8 +32,8 @@ export default {
     PlayResetButton,
     FooterComponent
   },
-  data(){
-    return{
+  data() {
+    return {
       transformArray: [],
       pointTotal: [],
       apiChoice: '',
@@ -41,18 +42,18 @@ export default {
     }
   },
   methods: {
-    arrayName(el){
+    arrayName(el) {
       this.transformArray = el;
     },
-    point(el){
-       this.pointTotal = el;
+    point(el) {
+      this.pointTotal = el;
 
-       this.strikeForImage = this.pointTotal[0];
+      this.strikeForImage = this.pointTotal[0];
     },
-    api(el){
+    api(el) {
       this.apiChoice = el;
     },
-    noneButton0o1(el){
+    noneButton0o1(el) {
       this.noneButton0o1App = el;
     }
   }
@@ -60,20 +61,22 @@ export default {
 </script>
 
 <style lang="scss">
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
-  background-color: #2c3e50;
+  background-image: linear-gradient(to top, #b9eee8, #007468);
+  background-color: #06ffe6;
   color: white;
   width: 100vw;
   height: 100vh;
 
-  #containerGame{
+  #containerGame {
     height: calc(100vh - 120px);
     width: 70%;
     margin: 0 auto;

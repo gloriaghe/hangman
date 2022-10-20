@@ -1,8 +1,9 @@
 <template>
     <div class="text-center">
         <button id="btn-start" :disabled="btDisabled" @click="startButton()"
-            class="btn btn-outline-primary my-4 mx-3">START</button>
+            class="btn btn-outline-success my-4 mx-3">START</button>
         <button id="reset" @click="resetButton" class="btn btn-outline-danger my-4">RESET</button>
+        <h2>{{error}}</h2>
         <h4>{{loading}}</h4>
         <div :class="reset? 'd-none' : ''" v-if="resetButtonComponent? !reset: reset">
             <h2>Il nome da indovinare è: <span class="text-uppercase">{{word}}</span></h2>
@@ -29,7 +30,8 @@ export default {
             reset: false,
             btDisabled: false,
             noneButton0o1: false,
-            saveName: ''
+            saveName: '',
+            error: '',
         }
     },
     computed: {
@@ -100,7 +102,7 @@ export default {
             this.transformArray = [];
 
             if (this.apiChose != '') {
-
+                this.error = '';
                 getWord(this.apiChose).then(resp => {
 
                     console.log(resp.data.name)
@@ -116,7 +118,7 @@ export default {
                 // //emit to App.vue
                 this.$emit('start', this.transformArray);
             } else {
-                alert('Seleziona Pokemon o Star Wars');
+                this.error = 'Hai dimenticato di selezionare Pokemon o Star Wars!!!';
             }
 
         },
