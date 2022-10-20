@@ -19,6 +19,9 @@ computed: {
 <style lang="scss">
     img{
         max-width: 150px;
-        max-height: 250px;
+        max-height: 230px;
+        border-radius: 20px;
+        object-fit: cover;
+        margin-top: 50px;
     }
 </style>

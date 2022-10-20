@@ -1,6 +1,7 @@
 <template>
     <div class="text-center">
-        <button id="btn-start" :disabled="btDisabled" @click="startButton()" class="btn btn-outline-primary my-4 mx-3">START</button>
+        <button id="btn-start" :disabled="btDisabled" @click="startButton()"
+            class="btn btn-outline-primary my-4 mx-3">START</button>
         <button id="reset" @click="resetButton" class="btn btn-outline-danger my-4">RESET</button>
         <h4>{{loading}}</h4>
         <div :class="reset? 'd-none' : ''" v-if="resetButtonComponent? !reset: reset">
@@ -13,7 +14,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import { getWord } from "../api.js";
 
 export default {
@@ -23,7 +23,7 @@ export default {
         apiChose: String
     },
     data() {
-        return{
+        return {
             transformArray: [],
             loading: "",
             reset: false,
@@ -33,17 +33,21 @@ export default {
         }
     },
     computed: {
-        strike: function(){
+        strike: function () {
             return this.arrayPoint[0];
-        },   
-        result: function(){
-            if(this.arrayPoint[1] != '' && this.arrayPoint[5] != 1 && this.arrayPoint[5] != undefined){
-                alert(this.arrayPoint[1])
-            } 
+        },
+        result: function () {
+            if (this.arrayPoint[1] != '' && this.arrayPoint[5] != 1 && this.arrayPoint[5] != undefined) {
+                if (this.arrayPoint[7] === this.saveName) {
+                    return this.arrayPoint[1];
+                } else {
+                    return ''
+                }
+            }
             return '';
         },
-        errors: function(){
-            if(this.reset === false){
+        errors: function () {
+            if (this.reset === false) {
                 return ''
             } else if (this.reset === true) {
                 return this.arrayPoint[2];
@@ -51,11 +55,11 @@ export default {
                 return ''
             }
         },
-        score: function(){
+        score: function () {
             return this.arrayPoint[3];
         },
-        scoreTotal: function(){
-            if(this.reset === false){
+        scoreTotal: function () {
+            if (this.reset === false) {
                 return ''
             } else if (this.reset === true) {
                 return this.arrayPoint[4];
@@ -63,67 +67,66 @@ export default {
                 return ''
             }
         },
-        resetButtonComponent: function(){
+        resetButtonComponent: function () {
             return this.arrayPoint[5];
         },
-        word: function(){
-            if(this.arrayPoint[7] === this.saveName){
-
+        word: function () {
+            if (this.arrayPoint[7] === this.saveName) {
                 return this.arrayPoint[6];
-            } else  {
+            } else {
                 return '_____'
-                        }
+            }
         },
     },
     methods: {
         // function string to name
-        arrToString(nameGame){
+        arrToString(nameGame) {
             const name = nameGame.trim().toUpperCase();
-                this.transformArray = name.split("");
-                this.transformArray.forEach((element, i) => {
-                    if(element == " "){
-                        this.transformArray.splice(i, 1)                    
-                    }
-                    if(element == "-"){
-                        this.transformArray.splice(i, 1)                    
-                    }
-                });
-                // emit to App.vue
-                this.$emit('start', [nameGame, this.transformArray]);
+            this.transformArray = name.split("");
+            this.transformArray.forEach((element, i) => {
+                if (element == " ") {
+                    this.transformArray.splice(i, 1)
+                }
+                if (element == "-") {
+                    this.transformArray.splice(i, 1)
+                }
+            });
+            // emit to App.vue
+            this.$emit('start', [nameGame, this.transformArray]);
         },
-        startButton(){
+        startButton() {
             // display none on message
             this.reset = false;
             this.transformArray = [];
 
-        if(this.apiChose != ''){
+            if (this.apiChose != '') {
 
-            getWord(this.apiChose).then(resp => {
-            
-                console.log(resp.data.name)   
-                this.saveName =  resp.data.name;            
-                this.arrToString(resp.data.name);
-            })
+                getWord(this.apiChose).then(resp => {
 
-            
-            this.loading= "Loading...";
-            setTimeout(this.noneButton, 4000)
-            this.btDisabled = true;
-            
-            // //emit to App.vue
-            this.$emit('start', this.transformArray);
-        } else {
-            alert('Seleziona Pokemon o Star Wars');
-        }
+                    console.log(resp.data.name)
+                    this.saveName = resp.data.name;
+                    this.arrToString(resp.data.name);
+                })
+
+
+                this.loading = "Loading...";
+                setTimeout(this.noneButton, 4000)
+                this.btDisabled = true;
+
+                // //emit to App.vue
+                this.$emit('start', this.transformArray);
+            } else {
+                alert('Seleziona Pokemon o Star Wars');
+            }
 
         },
-        noneButton(){
+        noneButton() {
             this.noneButton0o1 = true;
-            this.loading= "";
+            this.loading = "";
             this.$emit('noneButton', this.noneButton0o1);
-            
+
         },
-        resetButton(){
+        resetButton() {
             this.noneButton0o1 = false;
             this.$emit('noneButton', this.noneButton0o1);
 
@@ -132,7 +135,7 @@ export default {
             this.btDisabled = false;
             this.transformArray = [];
         },
-        
+
     }
 }
 </script>

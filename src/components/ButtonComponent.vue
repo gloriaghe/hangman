@@ -216,6 +216,9 @@ export default {
       if (!name.includes('_')) {
         this.result = 'HAI VINTO!!! Il nome era ' + name.toUpperCase();
         this.resetButtonComponent = 0;
+        this.arrletters.forEach(element => {
+          element.active = true;
+        });
       }
 
       //error
@@ -237,7 +240,9 @@ export default {
 
           this.result = 'HAI PERSO!!! Il nome era ' + arrayName.join("").toUpperCase();
           this.resetButtonComponent = 0;
-
+          this.arrletters.forEach(element => {
+            element.active = true;
+          });
         }
       }
 
