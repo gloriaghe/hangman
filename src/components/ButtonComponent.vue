@@ -149,7 +149,6 @@ export default {
       this.check(element, this.arrayModify[0], this.arrayModify[1], this.correct, this.arrayModify[0]);
     },
     toStart() {
-      console.log('diverso')
       this.score = 0;
       this.strike = 0;
       this.result = "";
