@@ -39,45 +39,25 @@ export default {
             return this.arrayPoint[0];
         },
         result: function () {
-            if (this.arrayPoint[1] != '' && this.arrayPoint[5] != 1 && this.arrayPoint[5] != undefined) {
-                if (this.arrayPoint[7] === this.saveName) {
-                    return this.arrayPoint[1];
-                } else {
-                    return ''
-                }
+            if (this.arrayPoint[1] === '' || this.arrayPoint[5] === 1 || this.arrayPoint[5] === undefined || this.arrayPoint[7] !== this.saveName) {
+                return ''
             }
-            return '';
+            return this.arrayPoint[1];
         },
         errors: function () {
-            if (this.reset === false) {
-                return ''
-            } else if (this.reset === true) {
-                return this.arrayPoint[2];
-            } else {
-                return ''
-            }
+            return this.reset === true ? this.arrayPoint[2] : '';
         },
         score: function () {
             return this.arrayPoint[3];
         },
         scoreTotal: function () {
-            if (this.reset === false) {
-                return ''
-            } else if (this.reset === true) {
-                return this.arrayPoint[4];
-            } else {
-                return ''
-            }
+            return this.reset === true ? this.arrayPoint[4] : '';
         },
         resetButtonComponent: function () {
             return this.arrayPoint[5];
         },
         word: function () {
-            if (this.arrayPoint[7] === this.saveName) {
-                return this.arrayPoint[6];
-            } else {
-                return '_____'
-            }
+            return this.arrayPoint[7] === this.saveName ? this.arrayPoint[6] : '_____';
         },
     },
     methods: {
@@ -86,12 +66,10 @@ export default {
             const name = nameGame.trim().toUpperCase();
             this.transformArray = name.split("");
             this.transformArray.forEach((element, i) => {
-                if (element == " ") {
+                if (element === " " || element === "-") {
                     this.transformArray.splice(i, 1)
                 }
-                if (element == "-") {
-                    this.transformArray.splice(i, 1)
-                }
+
             });
             // emit to App.vue
             this.$emit('start', [nameGame, this.transformArray]);
@@ -101,7 +79,7 @@ export default {
             this.reset = false;
             this.transformArray = [];
 
-            if (this.apiChose != '') {
+            if (this.apiChose !== '') {
                 this.error = '';
                 getWord(this.apiChose).then(resp => {
 

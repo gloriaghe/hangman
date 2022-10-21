@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <div class="align-self-center container" id="containerButton" :class="noneButton == false? 'd-none': 'd-flex'">
+    <div class="align-self-center container" id="containerButton" :class="noneButton === false? 'd-none': 'd-flex'">
       <div class="d-flex flex-wrap justify-content-center">
         <button :disabled="!noneButton || element.active" @click="letterChoice(element.nameLetter)"
           v-for="(element, i) in arrletters" :key="i" :id="element" class="letter btn btn-info mx-2 my-2"
@@ -138,15 +138,18 @@ export default {
   },
   computed: {
     buttonNone: function () {
-      if (this.noneButton == false) {
-        this.toStart();
-      }
-      return '';
+      return this.noneButton === false ? this.toStart() : '';
     },
   },
   methods: {
     letterChoice(element) {
-      this.check(element, this.arrayModify[0], this.arrayModify[1], this.correct, this.arrayModify[0]);
+      this.check({
+        letter: element,
+        name: this.arrayModify[0],
+        arrayToModify: this.arrayModify[1],
+        correct: this.correct,
+        nameCorrect: this.arrayModify[0]
+      });
     },
     toStart() {
       this.score = 0;
@@ -177,7 +180,7 @@ export default {
         }
       });
     },
-    check(letter, name, arrayToModify, correct, nameCorrect) {
+    check({letter, name, arrayToModify, correct, nameCorrect}) {
 
       this.arrClick.push(letter);
 
@@ -185,7 +188,7 @@ export default {
         this.arrLetter = [];
       }
 
-      if (this.result != "") {
+      if (this.result !== "") {
         this.toStart();
       }
 
@@ -193,11 +196,11 @@ export default {
 
       arrayToModify.forEach(elemento => {
         //correct
-        if (elemento == letter) {
+        if (elemento === letter) {
           //compose name
           this.arrLetter.push(letter);
 
-          if (this.arrLetter != []) {
+          if (this.arrLetter !== []) {
             this.lettercomparison(arrayToModify, this.arrLetter);
           }
 
@@ -221,17 +224,17 @@ export default {
       }
 
       //error
-      if (correct == false) {
+      if (correct === false) {
         this.strike += 1;
         this.errors = 'Hai fatto ' + this.strike + ' errori';
-        let arrayName
+        let arrayName;
         if (this.strike >= 10) {
           arrayName = name.split("")
           let counter = -1;
 
           //full name without "_"
           arrayName.forEach((element, index) => {
-            if (element == '_') {
+            if (element === '_') {
               ++counter
               arrayName.splice(index, 1, arrayToModify[counter])
             }
@@ -257,13 +260,14 @@ export default {
 <style lang="scss">
 #containerButton {
   width: 60%;
-  .letter{
-    color:  white;
+
+  .letter {
+    color: white;
     background-color: rgb(0, 121, 121);
     border: none;
     border-radius: 10px;
 
-    &:hover{
+    &:hover {
       background-color: rgb(5, 173, 173);
 
     }

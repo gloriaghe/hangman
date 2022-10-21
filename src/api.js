@@ -7,14 +7,14 @@ const getWord = async (apiChoice) => {
     const apiStarWars = 'https://swapi.dev/api/people/';
     const randomNum = Math.floor(Math.random() * 83);
 
-    if (apiChoice == 'Pokemon'){
+    if (apiChoice === 'Pokemon'){
         apiInput = apiPokemon
-    } else if (apiChoice == 'Star Wars'){
+    } else if (apiChoice === 'Star Wars'){
         apiInput = apiStarWars
     } 
 
     let data = await axios.get(apiInput + randomNum);
-    console.log(data)
+    console.log(data);
     
     return data;
 };
