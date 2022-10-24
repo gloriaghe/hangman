@@ -1,5 +1,9 @@
 <template>
-    <img :src="'https://www.oligalma.com/downloads/images/hangman/hangman/'+strikes+'.jpg'" :alt="'hangman'">
+    <div>
+        <img v-if="strikes" :src="'https://www.oligalma.com/downloads/images/hangman/hangman/'+strikes+'.jpg'" :alt="'hangman'">
+        <img v-else :src="'https://www.oligalma.com/downloads/images/hangman/hangman/0.jpg'" :alt="'hangman'">
+    </div>
+
 </template>
 
 <script>

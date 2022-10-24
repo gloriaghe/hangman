@@ -16,6 +16,8 @@
 
 <script>
 import { getWord } from "../api.js";
+import { resetSharedState } from "../resetSharedState.js";
+
 
 export default {
     name: "PlayResetButton",
@@ -25,6 +27,7 @@ export default {
     },
     data() {
         return {
+            resetSharedState,
             transformArray: [],
             loading: "",
             reset: false,
@@ -98,6 +101,7 @@ export default {
             } else {
                 this.error = 'Hai dimenticato di selezionare Pokemon o Star Wars!!!';
             }
+            resetSharedState.resetTrue();
 
         },
         noneButton() {
@@ -114,6 +118,7 @@ export default {
             this.reset = true;
             this.btDisabled = false;
             this.transformArray = [];
+            resetSharedState.resetFalse();
         },
 
     }

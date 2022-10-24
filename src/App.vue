@@ -30,7 +30,7 @@ export default {
     HangMan,
     ButtonComponent,
     PlayResetButton,
-    FooterComponent
+    FooterComponent,
   },
   data() {
     return {
@@ -47,7 +47,6 @@ export default {
     },
     point(el) {
       this.pointTotal = el;
-
       this.strikeForImage = this.pointTotal[0];
     },
     api(el) {

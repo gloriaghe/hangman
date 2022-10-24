@@ -1,18 +1,23 @@
 <template>
   <section class="container">
-    <div class="align-self-center container" id="containerButton" :class="noneButton === false? 'd-none': 'd-flex'">
+    <div class="align-self-center container" id="containerButton" :class="noneButton === false ? 'd-none' : 'd-flex'">
       <div class="d-flex flex-wrap justify-content-center">
         <button :disabled="!noneButton || element.active" @click="letterChoice(element.nameLetter)"
           v-for="(element, i) in arrletters" :key="i" :id="element" class="letter btn btn-info mx-2 my-2"
-          :value="element.nameLetter">{{element.nameLetter}}</button>
+          :value="element.nameLetter">{{ element.nameLetter }}</button>
       </div>
       <!-- check for function tostart() -->
-      <div>{{buttonNone}}</div>
+      <div>{{ buttonNone }}</div>
+      <div class="d-none">{{ resetFunction }}</div>
     </div>
   </section>
 </template>
 
 <script>
+import { resetSharedState } from "../resetSharedState.js";
+
+
+
 export default {
   name: 'ButtonComponent',
   props: {
@@ -133,13 +138,24 @@ export default {
       resetButtonComponent: 1,
       arrLetter: [],
       buttonDiasabled: false,
-      arrClick: []
+      arrClick: [],
+      resetSharedState,
+      scores: []
     }
   },
   computed: {
-    buttonNone: function () {
-      return this.noneButton === false ? this.toStart() : '';
+    resetFunction: function() {
+      if (resetSharedState.reset === false) {
+        this.toStart();
+      }
+      this.$emit('point', this.scores);
+
+      return ''
     },
+    buttonNone: function () {
+
+      return this.noneButton === false ? this.toStart() : '';
+    }
   },
   methods: {
     letterChoice(element) {
@@ -152,6 +168,7 @@ export default {
       });
     },
     toStart() {
+      this.scores= [];
       this.score = 0;
       this.strike = 0;
       this.result = "";
@@ -180,7 +197,7 @@ export default {
         }
       });
     },
-    check({letter, name, arrayToModify, correct, nameCorrect}) {
+    check({ letter, name, arrayToModify, correct, nameCorrect }) {
 
       this.arrClick.push(letter);
 
@@ -249,9 +266,10 @@ export default {
       }
 
       this.buttonDisabled(this.arrletters, this.arrClick);
-
+      this.scores = [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name, nameCorrect];
       //emit to App.vue
-      this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name, nameCorrect]);
+      // this.$emit('point', [this.strike, this.result, this.errors, this.score, this.scoreTotal, this.resetButtonComponent, name, nameCorrect]);
+      this.$emit('point', this.scores);
     },
   }
 }
